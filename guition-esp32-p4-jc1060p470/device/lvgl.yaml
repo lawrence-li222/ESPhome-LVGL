@@ -12,22 +12,7 @@ switch:
 lvgl:
   displays: my_display
   byte_order: little_endian
-  on_touch:
-    then:
-      - lambda: |-
-          id(last_activity) = millis();
-      - light.turn_on:
-          id: backlight
-          brightness: 100%
-  interval:
-  - interval: 10s
-    then:
-      - lambda: |-
-          if (millis() - id(last_activity) > 120000) {
-            auto call = id(backlight).turn_on();
-            call.set_brightness(0.05);
-            call.perform();
-          }
+  
   top_layer:
     widgets:
       # Temperature
