@@ -45,5 +45,5 @@ substitutions:
   filament:       "\U000F07DE"
   lan:            "\U000F0317"
   ceiling_fan_light: "\U000F1798"
-  ceiling-fan: "\U000F1797"
+  ceiling_fan: "\U000F1797"
 

@@ -55,7 +55,7 @@ lvgl:
                   text_font: $icon_font
                   align: top_left
                   id: office_ceiling_fan_icon                
-                  text: $ceiling-fan
+                  text: $ceiling_fan
               - label:
                   align: bottom_left
                   id: office_ceiling_fan_label
