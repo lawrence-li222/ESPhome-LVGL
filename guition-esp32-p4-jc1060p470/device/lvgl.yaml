@@ -1,4 +1,4 @@
-fan:
+switch:
   - platform: homeassistant
     id: ha_office_fan
     entity_id: fan.office_ceiling_fan
