@@ -62,7 +62,7 @@ lvgl:
                   text: "Ceiling Fan Light"
             on_press:
               - homeassistant.service:
-                  service: switch.toggle
+                  service: light.turn_on
                   data:
                     entity_id: office_pico_light_on
 
