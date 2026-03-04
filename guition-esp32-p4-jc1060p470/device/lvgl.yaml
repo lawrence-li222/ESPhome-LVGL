@@ -177,7 +177,7 @@ lvgl:
                           service: fan.set_percentage
                           data:
                             entity_id: ${office_fan_entity}
-                            percentage: 33
+                            percentage: "33"
 
               - button:
                   id: btn_med
@@ -195,7 +195,7 @@ lvgl:
                           service: fan.set_percentage
                           data:
                             entity_id: ${office_fan_entity}
-                            percentage: 66
+                            percentage: "66"
 
               - button:
                   id: btn_high
@@ -213,7 +213,7 @@ lvgl:
                           service: fan.set_percentage
                           data:
                             entity_id: ${office_fan_entity}
-                            percentage: 100
+                            percentage: "100"
 
         # ── ON / OFF toggle ──────────────────────────────────────────────────
         - button:
