@@ -71,14 +71,14 @@ lvgl:
                   id: office_ceiling_fan_label
                   text: "Ceiling Fan"
             on_value:
-             then:
+              then:
                 - if:
-                  condition:
-                    lambda: return x;
-                  then:
-                    - fan.turn_on: ha_office_fan
-                  else:
-                    - fan.turn_off: ha_office_fan
+                    condition:
+                      lambda: return x;
+                    then:
+                      - fan.turn_on: ha_office_fan
+                    else:
+                      - fan.turn_off: ha_office_fan
            
         # # Office Calls Scene
         # - button: 
