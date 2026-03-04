@@ -1,13 +1,19 @@
-# switch:
-#   - platform: homeassistant
-#     id: ha_office_fan
-#     entity_id: fan.office_ceiling_fan
-#     on_state:
-#       then:
-#         - lvgl.widget.update:
-#             id: office_ceiling_fan_switch
-#             state:
-#               checked: !lambda return x;
+substitutions:
+  office_fan_entity: fan.office_ceiling_fan      # must match ha_fan.yaml
+
+  # ── Colours (tweak here, applied everywhere) ──────────────────────────────
+  color_bg:         "0x0D0D1A"
+  color_header:     "0x1A1A2E"
+  color_accent:     "0x00BFFF"
+  color_track:      "0x2A2A3E"
+  color_knob:       "0xFFFFFF"
+  color_btn_preset: "0x1E3A5F"
+  color_btn_on:     "0x007700"
+  color_btn_off:    "0xCC3300"
+  color_dot_off:    "0x444444"
+  color_muted:      "0x888888"
+  color_subtle:     "0xAAAAAA"
+  color_white:      "0xFFFFFF"
 
 lvgl:
   displays: my_display
@@ -61,13 +67,13 @@ lvgl:
       
       widgets:
       
-        # ── Header bar ──────────────────────────────────────────────
+       # ── Header ──────────────────────────────────────────────────────────
         - obj:
             align: TOP_MID
             y: 0
             width: 100%
             height: 50
-            bg_color: 0x1A1A2E
+            bg_color: ${color_header}
             pad_all: 0
             widgets:
               - label:
@@ -75,9 +81,7 @@ lvgl:
                   align: LEFT_MID
                   x: 15
                   text_font: montserrat_20
-                  text_color: 0xFFFFFF
-
-              # Status dot (blue=ON, grey=OFF)
+                  text_color: ${color_white}
               - obj:
                   id: status_dot
                   align: RIGHT_MID
@@ -85,33 +89,32 @@ lvgl:
                   width: 14
                   height: 14
                   radius: 7
-                  bg_color: 0x444444
-
+                  bg_color: ${color_dot_off}
               - label:
                   id: status_label
                   text: "OFF"
                   align: RIGHT_MID
                   x: -15
                   text_font: montserrat_14
-                  text_color: 0xAAAAAA
+                  text_color: ${color_subtle}
 
-        # ── Speed percentage display ────────────────────────────────
+        # ── Speed readout ────────────────────────────────────────────────────
         - label:
             id: speed_label
             text: "0%"
             align: CENTER
             y: -20
             text_font: montserrat_48
-            text_color: 0x00BFFF
+            text_color: ${color_accent}
 
         - label:
             text: "Speed"
             align: CENTER
             y: 40
             text_font: montserrat_16
-            text_color: 0x888888
+            text_color: ${color_muted}
 
-        # ── Slider ─────────────────────────────────────────────────
+        # ── Slider ──────────────────────────────────────────────────────────
         - slider:
             id: fan_slider
             align: BOTTOM_MID
@@ -122,35 +125,33 @@ lvgl:
             max_value: 100
             value: 0
             style_props:
-              bg_color: 0x2A2A3E
+              bg_color: ${color_track}
               radius: 6
             indicator:
               style_props:
-                bg_color: 0x00BFFF
+                bg_color: ${color_accent}
                 radius: 6
             knob:
               style_props:
-                bg_color: 0xFFFFFF
+                bg_color: ${color_knob}
                 width: 28
                 height: 28
                 radius: 14
                 shadow_width: 8
-                shadow_color: 0x00BFFF
+                shadow_color: ${color_accent}
             on_value:
               then:
-                # Update local label immediately for responsiveness
                 - lvgl.label.update:
                     id: speed_label
                     text: !lambda |-
                       return std::to_string((int)x) + "%";
-                # Call HA service — set fan percentage
                 - homeassistant.service:
                     service: fan.set_percentage
                     data:
-                      entity_id: fan.office_ceiling_fan    # ← your entity_id
+                      entity_id: ${fan_entity}
                       percentage: !lambda "return x;"
 
-        # ── Preset speed buttons ────────────────────────────────────
+        # ── Preset buttons (Low / Med / High) ────────────────────────────────
         - obj:
             align: BOTTOM_MID
             y: -40
@@ -162,14 +163,13 @@ lvgl:
               flex_flow: ROW
               flex_align_main: SPACE_EVENLY
               flex_align_cross: CENTER
-
             widgets:
               - button:
                   id: btn_low
                   width: 60
                   height: 32
                   style_props:
-                    bg_color: 0x1E3A5F
+                    bg_color: ${color_btn_preset}
                     radius: 16
                   widgets:
                     - label:
@@ -180,7 +180,7 @@ lvgl:
                       - homeassistant.service:
                           service: fan.set_percentage
                           data:
-                            entity_id: fan.office_ceiling_fan
+                            entity_id: ${fan_entity}
                             percentage: 33
 
               - button:
@@ -188,7 +188,7 @@ lvgl:
                   width: 60
                   height: 32
                   style_props:
-                    bg_color: 0x1E3A5F
+                    bg_color: ${color_btn_preset}
                     radius: 16
                   widgets:
                     - label:
@@ -199,7 +199,7 @@ lvgl:
                       - homeassistant.service:
                           service: fan.set_percentage
                           data:
-                            entity_id: fan.office_ceiling_fan
+                            entity_id: ${fan_entity}
                             percentage: 66
 
               - button:
@@ -207,7 +207,7 @@ lvgl:
                   width: 60
                   height: 32
                   style_props:
-                    bg_color: 0x1E3A5F
+                    bg_color: ${color_btn_preset}
                     radius: 16
                   widgets:
                     - label:
@@ -218,10 +218,10 @@ lvgl:
                       - homeassistant.service:
                           service: fan.set_percentage
                           data:
-                            entity_id: fan.office_ceiling_fan
+                            entity_id: ${fan_entity}
                             percentage: 100
 
-        # ── ON / OFF toggle button ──────────────────────────────────
+        # ── ON / OFF toggle ──────────────────────────────────────────────────
         - button:
             id: btn_toggle
             align: BOTTOM_MID
@@ -229,7 +229,7 @@ lvgl:
             width: 120
             height: 36
             style_props:
-              bg_color: 0xCC3300
+              bg_color: ${color_btn_on}
               radius: 18
             widgets:
               - label:
@@ -242,28 +242,12 @@ lvgl:
                     condition:
                       binary_sensor.is_on: ha_fan_state
                     then:
-                      # Fan is ON → turn it OFF
                       - homeassistant.service:
                           service: fan.turn_off
                           data:
-                            entity_id: fan.office_ceiling_fan
-                      - lvgl.label.update:
-                          id: toggle_label
-                          text: "  TURN ON"
-                      - lvgl.widget.update:
-                          id: btn_toggle
-                          style_props:
-                            bg_color: 0x007700
+                            entity_id: ${fan_entity}
                     else:
-                      # Fan is OFF → turn it ON at last slider value
                       - homeassistant.service:
                           service: fan.turn_on
                           data:
-                            entity_id: fan.office_ceiling_fan
-                      - lvgl.label.update:
-                          id: toggle_label
-                          text: "  TURN OFF"
-                      - lvgl.widget.update:
-                          id: btn_toggle
-                          style_props:
-                            bg_color: 0xCC3300
+                            entity_id: ${fan_entity}

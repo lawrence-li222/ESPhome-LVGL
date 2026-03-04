@@ -1,0 +1,68 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# packages/ha_fan.yaml — Home Assistant ↔ ESPHome state bridge
+#
+# Mirrors the HA fan entity onto local sensors so the LVGL UI
+# stays in sync when the fan is controlled from HA, voice, or automations.
+#
+# Change `fan.living_room_fan` to your actual HA entity_id everywhere.
+# ─────────────────────────────────────────────────────────────────────────────
+
+substitutions:
+  office_fan_entity: fan.office_ceiling_fan      # ← your HA fan entity_id
+
+sensor:
+  # Receives fan speed percentage (0–100) from HA
+  - platform: homeassistant
+    id: ha_fan_speed
+    entity_id: ${fan_entity}
+    attribute: percentage
+    on_value:
+      then:
+        - lvgl.slider.update:
+            id: fan_slider
+            value: !lambda "return x;"
+        - lvgl.label.update:
+            id: speed_label
+            text: !lambda |-
+              return std::to_string((int)x) + "%";
+
+binary_sensor:
+  # Receives fan on/off state from HA
+  - platform: homeassistant
+    id: ha_office_fan_state
+    entity_id: ${office_fan_entity}
+    on_state:
+      then:
+        - if:
+            condition:
+              binary_sensor.is_on: ha_office_fan_state
+            then:
+              - lvgl.widget.update:
+                  id: status_dot
+                  style_props:
+                    bg_color: 0x00BFFF
+              - lvgl.label.update:
+                  id: status_label
+                  text: "ON"
+              - lvgl.label.update:
+                  id: toggle_label
+                  text: "  TURN OFF"
+              - lvgl.widget.update:
+                  id: btn_toggle
+                  style_props:
+                    bg_color: 0xCC3300
+            else:
+              - lvgl.widget.update:
+                  id: status_dot
+                  style_props:
+                    bg_color: 0x444444
+              - lvgl.label.update:
+                  id: status_label
+                  text: "OFF"
+              - lvgl.label.update:
+                  id: toggle_label
+                  text: "  TURN ON"
+              - lvgl.widget.update:
+                  id: btn_toggle
+                  style_props:
+                    bg_color: 0x007700
