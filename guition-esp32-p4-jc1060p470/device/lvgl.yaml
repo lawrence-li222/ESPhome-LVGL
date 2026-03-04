@@ -66,23 +66,7 @@ lvgl:
       pad_right: 5
       
       widgets:
-        # ── Background image ────────────────────────────────────────────────
-        - image:
-            src: bg_office
-            align: CENTER
-            x: 0
-            y: 0
-
-        # ── Dim overlay (semi-transparent black over the image) ──────────────
-        - obj:
-            align: CENTER
-            x: 0
-            y: 0
-            width: 1024
-            height: 600
-            bg_color: 0x000000
-            bg_opa: 55%           # 0%=clear, 100%=solid
-            border_width: 0
+       
        # ── Header ──────────────────────────────────────────────────────────
         - obj:
             align: TOP_MID
