@@ -57,7 +57,7 @@ lvgl:
       widgets:
 
         # ── Background image ────────────────────────────────────────────────
-        - img:
+        - image:
             src: bg_office
             align: CENTER
             x: 0
