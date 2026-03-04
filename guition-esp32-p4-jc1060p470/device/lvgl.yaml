@@ -44,11 +44,10 @@ lvgl:
       widgets:
       
         # Office Ceiling Fan Light
-        - button: 
-            height: $button_height
-            width: $button_width
-            checkable: true
-            id: office_ceiling_fan_button
+        - switch: 
+            align: CENTER
+
+            id: office_ceiling_fan_switch
             styles: control
             widgets:
               - label:
@@ -60,12 +59,14 @@ lvgl:
                   align: bottom_left
                   id: office_ceiling_fan_label
                   text: "Ceiling Fan"
-            on_press:
-              - homeassistant.service:
-                  service: fan.turn_on
-                  data:
-                    entity_id: fan.office_ceiling_fan
-
+            on_value:
+              - lambda: |-
+                  if (state) {
+                    id(fan.office_ceiling_fan).turn_on();
+                  } else {
+                    id(fan.office_ceiling_fan).turn_off();
+                  }
+           
         # # Office Calls Scene
         # - button: 
         #     height: $button_height
@@ -410,3 +411,12 @@ lvgl:
         #           service: light.toggle
         #           data:
         #             entity_id: light.office_network_rack
+# Link the switch state back from Home Assistant
+switch:
+  - platform: homeassistant
+    id: office_ha_ceiling_fan_switch
+    entity_id: fan.office_ceiling_fan
+    on_state:
+      - lvgl.switch.update:
+          id: office_ceiling_fan_switch
+          state: !lambda 'return x;'
