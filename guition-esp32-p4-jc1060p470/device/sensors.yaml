@@ -1,93 +1,93 @@
 sensor:
 
   # Header Outdoor Temperate
-  - platform: homeassistant
-    entity_id: sensor.office_temperature
-    id: office_temperature
-    on_value:
-      - lvgl.label.update:
-          id: temperatures
-          text:
-            format: "%d° / %d°"
-            args: [ '(int)round(id(outdoor_temperature).state)', '(int)round(x)' ]
+#   - platform: homeassistant
+#     entity_id: sensor.office_temperature
+#     id: office_temperature
+#     on_value:
+#       - lvgl.label.update:
+#           id: temperatures
+#           text:
+#             format: "%d° / %d°"
+#             args: [ '(int)round(id(outdoor_temperature).state)', '(int)round(x)' ]
 
-  - platform: homeassistant
-    entity_id: sensor.outdoor_temperature
-    id: outdoor_temperature
-    on_value:
-      - lvgl.label.update:
-          id: temperatures
-          text:
-            format: "%d° / %d°"
-            args: [ '(int)round(x)', '(int)round(id(office_temperature).state)' ]
+#   - platform: homeassistant
+#     entity_id: sensor.outdoor_temperature
+#     id: outdoor_temperature
+#     on_value:
+#       - lvgl.label.update:
+#           id: temperatures
+#           text:
+#             format: "%d° / %d°"
+#             args: [ '(int)round(x)', '(int)round(id(office_temperature).state)' ]
 
-  # Office Blind Position
-  - platform: homeassistant
-    entity_id: cover.office_blind
-    id: office_blind_position
-    attribute: current_position
+#   # Office Blind Position
+#   - platform: homeassistant
+#     entity_id: cover.office_blind
+#     id: office_blind_position
+#     attribute: current_position
 
-  # Centauri Carbon Print Progress
-  - platform: homeassistant
-    entity_id: sensor.centauri_carbon_percent_complete_helper
-    id: centauri_carbon_percent
-    on_value:
-      - lvgl.label.update:
-          id: print_progress_label
-          text:
-            format: "%.0f"
-            args: [ 'x' ]
+#   # Centauri Carbon Print Progress
+#   - platform: homeassistant
+#     entity_id: sensor.centauri_carbon_percent_complete_helper
+#     id: centauri_carbon_percent
+#     on_value:
+#       - lvgl.label.update:
+#           id: print_progress_label
+#           text:
+#             format: "%.0f"
+#             args: [ 'x' ]
 
-  # Filament Heater Humidity
-  - platform: homeassistant
-    entity_id: sensor.office_filament_heater_sensor_humidity
-    id: filament_heater_humidity
-    on_value:
-      - lvgl.label.update:
-          id: dryer_humidity_label
-          text:
-            format: "%.0f"
-            args: [ 'x' ]
+#   # Filament Heater Humidity
+#   - platform: homeassistant
+#     entity_id: sensor.office_filament_heater_sensor_humidity
+#     id: filament_heater_humidity
+#     on_value:
+#       - lvgl.label.update:
+#           id: dryer_humidity_label
+#           text:
+#             format: "%.0f"
+#             args: [ 'x' ]
 
 
 
-binary_sensor:
+# binary_sensor:
 
-  # Office Evening Scene
-  - platform: homeassistant
-    id: office_scene_evening
-    entity_id: switch.office_evening_stateful_scene
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_scene_evening_button
-          state:
-            checked: !lambda return x;
+#   # Office Evening Scene
+#   - platform: homeassistant
+#     id: office_scene_evening
+#     entity_id: switch.office_evening_stateful_scene
+#     trigger_on_initial_state: true
+#     on_state:
+#       then:
+#         lvgl.widget.update:
+#           id: office_scene_evening_button
+#           state:
+#             checked: !lambda return x;
 
-  # Office Dimmed Scene
-  - platform: homeassistant
-    id: office_scene_dimmed
-    entity_id: switch.office_dimmed_stateful_scene
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_scene_dimmed_button
-          state:
-            checked: !lambda return x;
+#   # Office Dimmed Scene
+#   - platform: homeassistant
+#     id: office_scene_dimmed
+#     entity_id: switch.office_dimmed_stateful_scene
+#     trigger_on_initial_state: true
+#     on_state:
+#       then:
+#         lvgl.widget.update:
+#           id: office_scene_dimmed_button
+#           state:
+#             checked: !lambda return x;
 
-  # Office Calls Scene
-  - platform: homeassistant
-    id: office_scene_desk_call
-    entity_id: switch.office_calls_stateful_scene
-    trigger_on_initial_state: true
-    on_state:
-      then:
-        lvgl.widget.update:
-          id: office_scene_calls_button
-          state:
-            checked: !lambda return x;
+#   # Office Calls Scene
+#   - platform: homeassistant
+#     id: office_scene_desk_call
+#     entity_id: switch.office_calls_stateful_scene
+#     trigger_on_initial_state: true
+#     on_state:
+#       then:
+#         lvgl.widget.update:
+#           id: office_scene_calls_button
+#           state:
+#             checked: !lambda return x;
 
   # Office Features Scene
   # - platform: homeassistant
