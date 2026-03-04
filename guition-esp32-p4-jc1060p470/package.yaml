@@ -9,4 +9,3 @@ packages:
   icons: !include assets/icons.yaml
   button: !include theme/button.yaml
   ha_fan: !include ha/ha_fan.yaml
-  images: !include images/images.yaml
