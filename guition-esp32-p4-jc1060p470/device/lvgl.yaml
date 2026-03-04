@@ -63,7 +63,7 @@ lvgl:
             on_press:
               - homeassistant.service:
                   service: light.turn_on
-                  data: =
+                  data:
                     entity_id: light.office_pico_light_on
 
         # Office Calls Scene
