@@ -64,7 +64,7 @@ lvgl:
               - homeassistant.service:
                   service: light.turn_on
                   data:
-                    entity_id: office_pico_light_on
+                    entity_id: light.office_pico_light_on
 
         # Office Calls Scene
         - button: 
