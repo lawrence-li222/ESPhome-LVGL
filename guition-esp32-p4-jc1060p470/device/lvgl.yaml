@@ -71,7 +71,7 @@ lvgl:
         - obj:
             align: TOP_MID
             y: 0
-            width: 25%
+            width: 35%
             height: 80
             bg_color: ${color_header}
             pad_all: 0
