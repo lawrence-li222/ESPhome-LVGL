@@ -9,20 +9,6 @@ switch:
             state:
               checked: !lambda return x;
 
-binary_sensor:
-  - platform: esp32_camera
-    id: cam_motion
-    motion_detection:
-      threshold: 8
-      frame_buffer_count: 2
-    on_press:
-      then:
-        - lambda: |-
-            id(last_activity) = millis();
-        - light.turn_on:
-            id: backlight
-            brightness: 100%
-
 lvgl:
   displays: my_display
   byte_order: little_endian
