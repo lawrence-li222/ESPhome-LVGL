@@ -124,21 +124,18 @@ lvgl:
             min_value: 0
             max_value: 100
             value: 0
-            style_props:
-              bg_color: ${color_track}
-              radius: 6
+            bg_color: ${color_track}
+            radius: 6
             indicator:
-              style_props:
-                bg_color: ${color_accent}
-                radius: 6
+              bg_color: ${color_accent}
+              radius: 6
             knob:
-              style_props:
-                bg_color: ${color_knob}
-                width: 28
-                height: 28
-                radius: 14
-                shadow_width: 8
-                shadow_color: ${color_accent}
+              bg_color: ${color_knob}
+              width: 28
+              height: 28
+              radius: 14
+              shadow_width: 8
+              shadow_color: ${color_accent}
             on_value:
               then:
                 - lvgl.label.update:
@@ -168,9 +165,8 @@ lvgl:
                   id: btn_low
                   width: 60
                   height: 32
-                  style_props:
-                    bg_color: ${color_btn_preset}
-                    radius: 16
+                  bg_color: ${color_btn_preset}
+                  radius: 16
                   widgets:
                     - label:
                         text: "Low"
@@ -187,9 +183,8 @@ lvgl:
                   id: btn_med
                   width: 60
                   height: 32
-                  style_props:
-                    bg_color: ${color_btn_preset}
-                    radius: 16
+                  bg_color: ${color_btn_preset}
+                  radius: 16
                   widgets:
                     - label:
                         text: "Med"
@@ -206,9 +201,8 @@ lvgl:
                   id: btn_high
                   width: 60
                   height: 32
-                  style_props:
-                    bg_color: ${color_btn_preset}
-                    radius: 16
+                  bg_color: ${color_btn_preset}
+                  radius: 16
                   widgets:
                     - label:
                         text: "High"
@@ -228,9 +222,8 @@ lvgl:
             y: -5
             width: 120
             height: 36
-            style_props:
-              bg_color: ${color_btn_on}
-              radius: 18
+            bg_color: ${color_btn_on}
+            radius: 18
             widgets:
               - label:
                   id: toggle_label

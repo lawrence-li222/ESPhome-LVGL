@@ -4,7 +4,7 @@
 # Mirrors the HA fan entity onto local sensors so the LVGL UI
 # stays in sync when the fan is controlled from HA, voice, or automations.
 #
-# Change `fan.living_room_fan` to your actual HA entity_id everywhere.
+# Change `fan.office_ceiling_fan` to your actual HA entity_id everywhere.
 # ─────────────────────────────────────────────────────────────────────────────
 
 substitutions:
@@ -39,8 +39,7 @@ binary_sensor:
             then:
               - lvgl.widget.update:
                   id: status_dot
-                  style_props:
-                    bg_color: 0x00BFFF
+                  bg_color: 0x00BFFF
               - lvgl.label.update:
                   id: status_label
                   text: "ON"
@@ -49,13 +48,11 @@ binary_sensor:
                   text: "  TURN OFF"
               - lvgl.widget.update:
                   id: btn_toggle
-                  style_props:
-                    bg_color: 0xCC3300
+                  bg_color: 0xCC3300
             else:
               - lvgl.widget.update:
                   id: status_dot
-                  style_props:
-                    bg_color: 0x444444
+                  bg_color: 0x444444
               - lvgl.label.update:
                   id: status_label
                   text: "OFF"
@@ -64,5 +61,4 @@ binary_sensor:
                   text: "  TURN ON"
               - lvgl.widget.update:
                   id: btn_toggle
-                  style_props:
-                    bg_color: 0x007700
+                  bg_color: 0x007700
