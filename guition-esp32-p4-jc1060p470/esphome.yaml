@@ -1,17 +1,19 @@
-# ESP32-P4-JC1060P470
+esphome:
+  name: touch-panel-with-camera
+  friendly_name: Touch Panel with Camera
+  # ESP32-P4-JC1060P470
 substitutions:
-  name: "your-device-name"
-  friendly_name: "Your Room Sensor"
-  room: "Your Room"
+  name: touch-panel-with-camera
+  friendly_name: Touch Panel with Camera
+  room: guest-bedroom
 
-# Wifi Setup
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
-
+    
 # Packages
 packages:
   setup:
-    url: https://github.com/jtenniswood/esphome-lvgl/
+    url: https://github.com/lawrence-li222/ESPhome-LVGL/
     file: guition-esp32-p4-jc1060p470/package.yaml
     refresh: 1sec
