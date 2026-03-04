@@ -1,5 +1,5 @@
 image:
-  - file: https://raw.githubusercontent.com/lawrenceli222/ESPhome-LVGL/tree/main/guition-esp32-p4-jc1060p470/images/bgoffice.png
+  - file: https://github.com/lawrence-li222/ESPhome-LVGL/tree/main/guition-esp32-p4-jc1060p470/images/bgoffice.png
     id: bg_office
     type: RGB565        # compact format — best for displays
     resize: 1024x600    # must match your display resolution exactly
