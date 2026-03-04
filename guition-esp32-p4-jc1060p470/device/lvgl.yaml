@@ -52,22 +52,28 @@ lvgl:
           
   pages:
     - id: office_page
-      layout: 
-        type: flex
-        flex_flow: column_wrap
-        pad_row: 10
-        pad_column: 10
-      width: 100%
-      bg_color: Black
-      bg_opa: cover
-      pad_top: 42
-      pad_bottom: 5
-      pad_left: 5
-      pad_right: 5
-      
+      bg_color: 0x000000
+      bg_opa: 0           # transparent — image widget is the bg
       widgets:
-      
-       # ── Header ──────────────────────────────────────────────────────────
+
+        # ── Background image ────────────────────────────────────────────────
+        - img:
+            src: bg_office
+            align: CENTER
+            x: 0
+            y: 0
+
+        # ── Dim overlay (semi-transparent black over the image) ──────────────
+        - obj:
+            align: CENTER
+            x: 0
+            y: 0
+            width: 1024
+            height: 600
+            bg_color: 0x000000
+            bg_opa: 140           # 0=clear, 255=solid. 140 ≈ 55% dim
+            border_width: 0
+        # ──── Header ──────────────────────────────────────────────────────────
         - obj:
             align: TOP_MID
             y: 0
