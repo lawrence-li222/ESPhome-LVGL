@@ -1,13 +1,13 @@
-switch:
-  - platform: homeassistant
-    id: ha_office_fan
-    entity_id: fan.office_ceiling_fan
-    on_state:
-      then:
-        - lvgl.widget.update:
-            id: office_ceiling_fan_switch
-            state:
-              checked: !lambda return x;
+# switch:
+#   - platform: homeassistant
+#     id: ha_office_fan
+#     entity_id: fan.office_ceiling_fan
+#     on_state:
+#       then:
+#         - lvgl.widget.update:
+#             id: office_ceiling_fan_switch
+#             state:
+#               checked: !lambda return x;
 
 lvgl:
   displays: my_display
@@ -61,30 +61,209 @@ lvgl:
       
       widgets:
       
-        # Office Ceiling Fan Light
-        - button: 
-            height: $button_height
-            width: $button_width
-            checkable: true
-            id: office_ceiling_fan_switch
-            styles: control
+        # ── Header bar ──────────────────────────────────────────────
+        - obj:
+            align: TOP_MID
+            y: 0
+            width: 100%
+            height: 50
+            bg_color: 0x1A1A2E
+            pad_all: 0
             widgets:
               - label:
-                  text_font: $icon_font
-                  align: top_left
-                  id: office_ceiling_fan_icon                
-                  text: $ceiling_fan
+                  text: " Fan Control"
+                  align: LEFT_MID
+                  x: 15
+                  text_font: montserrat_20
+                  text_color: 0xFFFFFF
+
+              # Status dot (blue=ON, grey=OFF)
+              - obj:
+                  id: status_dot
+                  align: RIGHT_MID
+                  x: -50
+                  width: 14
+                  height: 14
+                  radius: 7
+                  bg_color: 0x444444
+
               - label:
-                  align: bottom_left
-                  id: office_ceiling_fan_label
-                  text: "Office Ceiling Fan"
+                  id: status_label
+                  text: "OFF"
+                  align: RIGHT_MID
+                  x: -15
+                  text_font: montserrat_14
+                  text_color: 0xAAAAAA
+
+        # ── Speed percentage display ────────────────────────────────
+        - label:
+            id: speed_label
+            text: "0%"
+            align: CENTER
+            y: -20
+            text_font: montserrat_48
+            text_color: 0x00BFFF
+
+        - label:
+            text: "Speed"
+            align: CENTER
+            y: 40
+            text_font: montserrat_16
+            text_color: 0x888888
+
+        # ── Slider ─────────────────────────────────────────────────
+        - slider:
+            id: fan_slider
+            align: BOTTOM_MID
+            y: -90
+            width: 85%
+            height: 12
+            min_value: 0
+            max_value: 100
+            value: 0
+            style_props:
+              bg_color: 0x2A2A3E
+              radius: 6
+            indicator:
+              style_props:
+                bg_color: 0x00BFFF
+                radius: 6
+            knob:
+              style_props:
+                bg_color: 0xFFFFFF
+                width: 28
+                height: 28
+                radius: 14
+                shadow_width: 8
+                shadow_color: 0x00BFFF
             on_value:
+              then:
+                # Update local label immediately for responsiveness
+                - lvgl.label.update:
+                    id: speed_label
+                    text: !lambda |-
+                      return std::to_string((int)x) + "%";
+                # Call HA service — set fan percentage
+                - homeassistant.service:
+                    service: fan.set_percentage
+                    data:
+                      entity_id: fan.office_ceiling_fan    # ← your entity_id
+                      percentage: !lambda "return x;"
+
+        # ── Preset speed buttons ────────────────────────────────────
+        - obj:
+            align: BOTTOM_MID
+            y: -40
+            width: 90%
+            height: 36
+            bg_color: 0x00000000
+            layout:
+              type: FLEX
+              flex_flow: ROW
+              flex_align_main: SPACE_EVENLY
+              flex_align_cross: CENTER
+
+            widgets:
+              - button:
+                  id: btn_low
+                  width: 60
+                  height: 32
+                  style_props:
+                    bg_color: 0x1E3A5F
+                    radius: 16
+                  widgets:
+                    - label:
+                        text: "Low"
+                        text_font: montserrat_14
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: fan.set_percentage
+                          data:
+                            entity_id: fan.office_ceiling_fan
+                            percentage: 33
+
+              - button:
+                  id: btn_med
+                  width: 60
+                  height: 32
+                  style_props:
+                    bg_color: 0x1E3A5F
+                    radius: 16
+                  widgets:
+                    - label:
+                        text: "Med"
+                        text_font: montserrat_14
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: fan.set_percentage
+                          data:
+                            entity_id: fan.office_ceiling_fan
+                            percentage: 66
+
+              - button:
+                  id: btn_high
+                  width: 60
+                  height: 32
+                  style_props:
+                    bg_color: 0x1E3A5F
+                    radius: 16
+                  widgets:
+                    - label:
+                        text: "High"
+                        text_font: montserrat_14
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: fan.set_percentage
+                          data:
+                            entity_id: fan.office_ceiling_fan
+                            percentage: 100
+
+        # ── ON / OFF toggle button ──────────────────────────────────
+        - button:
+            id: btn_toggle
+            align: BOTTOM_MID
+            y: -5
+            width: 120
+            height: 36
+            style_props:
+              bg_color: 0xCC3300
+              radius: 18
+            widgets:
+              - label:
+                  id: toggle_label
+                  text: "  TURN ON"
+                  text_font: montserrat_14
+            on_click:
               then:
                 - if:
                     condition:
-                      lambda: return x;
+                      binary_sensor.is_on: ha_fan_state
                     then:
-                      - switch.turn_on: ha_office_fan
+                      # Fan is ON → turn it OFF
+                      - homeassistant.service:
+                          service: fan.turn_off
+                          data:
+                            entity_id: fan.office_ceiling_fan
+                      - lvgl.label.update:
+                          id: toggle_label
+                          text: "  TURN ON"
+                      - lvgl.widget.update:
+                          id: btn_toggle
+                          style_props:
+                            bg_color: 0x007700
                     else:
-                      - switch.turn_off: ha_office_fan
-           
+                      # Fan is OFF → turn it ON at last slider value
+                      - homeassistant.service:
+                          service: fan.turn_on
+                          data:
+                            entity_id: fan.office_ceiling_fan
+                      - lvgl.label.update:
+                          id: toggle_label
+                          text: "  TURN OFF"
+                      - lvgl.widget.update:
+                          id: btn_toggle
+                          style_props:
+                            bg_color: 0xCC3300
