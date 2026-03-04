@@ -152,7 +152,7 @@ lvgl:
                 - homeassistant.service:
                     service: fan.set_percentage
                     data:
-                      entity_id: ${fan_entity}
+                      entity_id: ${office_fan_entity}
                       percentage: !lambda "return (int)x;"
 
         # ── Preset buttons (Low / Med / High) ────────────────────────────────
