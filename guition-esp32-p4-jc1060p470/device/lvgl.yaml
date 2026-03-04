@@ -48,23 +48,23 @@ lvgl:
             height: $button_height
             width: $button_width
             checkable: true
-            id: office_ceiling_fan_light_button
+            id: office_ceiling_fan_button
             styles: control
             widgets:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: office_ceiling_fan_light_icon                
-                  text: $lightbulb
+                  id: office_ceiling_fan_icon                
+                  text: $ceiling-fan
               - label:
                   align: bottom_left
-                  id: office_ceiling_fan_light_label
-                  text: "Ceiling Fan Light"
+                  id: office_ceiling_fan_label
+                  text: "Ceiling Fan"
             on_press:
               - homeassistant.service:
-                  service: light.turn_on
+                  service: fan.turn_on
                   data:
-                    entity_id: light.office_pico_light_on
+                    entity_id: fan.office_ceiling_fan
 
         # # Office Calls Scene
         # - button: 
