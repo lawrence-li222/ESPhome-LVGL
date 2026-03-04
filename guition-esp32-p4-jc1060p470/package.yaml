@@ -10,3 +10,4 @@ packages:
   button: !include theme/button.yaml
   ha_fan: !include ha/ha_fan.yaml
   images: !include images/images.yaml
+  lcdprotect: !include addon/lcdprotect.yaml
