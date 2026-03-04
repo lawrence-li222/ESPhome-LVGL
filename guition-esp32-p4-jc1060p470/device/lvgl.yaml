@@ -76,9 +76,9 @@ lvgl:
                     condition:
                       lambda: return x;
                     then:
-                      - fan.turn_on: ha_office_fan
+                      - switch.turn_on: ha_office_fan
                     else:
-                      - fan.turn_off: ha_office_fan
+                      - switch.turn_off: ha_office_fan
            
         # # Office Calls Scene
         # - button: 
