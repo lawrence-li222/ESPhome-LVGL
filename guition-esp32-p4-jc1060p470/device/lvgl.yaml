@@ -18,6 +18,8 @@ substitutions:
 lvgl:
   displays: my_display
   byte_order: little_endian
+
+  initial_page: office_page
   
   top_layer:
     widgets:
@@ -58,8 +60,8 @@ lvgl:
         pad_row: 10
         pad_column: 10
       width: 100%
-      bg_color: 0x000000
-      bg_opa: 0%          # transparent — image widget is the bg
+      bg_color: 0x1A120B
+      # bg_opa: 0%          # transparent — image widget is the bg
       pad_top: 42
       pad_bottom: 5
       pad_left: 5
