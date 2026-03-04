@@ -120,8 +120,3 @@ display:
     auto_clear_enabled: false
     hsync_pulse_width: 20     # The only difference to the examples provided
 
-# Camera
-esp32_camera:
-  id: cam
-  resolution: 320x240
-  jpeg_quality: 12
