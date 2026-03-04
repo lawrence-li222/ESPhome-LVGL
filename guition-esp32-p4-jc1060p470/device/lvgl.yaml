@@ -19,8 +19,6 @@ lvgl:
   displays: my_display
   byte_order: little_endian
 
-  initial_page: office_page
-  
   top_layer:
     widgets:
       # Temperature
