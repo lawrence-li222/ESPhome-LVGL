@@ -137,23 +137,30 @@ lvgl:
               shadow_width: 8
               shadow_color: ${color_accent}
             on_value:
+              # Updates label while dragging (visual feedback only)
               then:
                 - lvgl.label.update:
                     id: speed_label
                     text: !lambda |-
                       return std::to_string((int)x) + "%";
+            on_release:
+              # Sends to HA only once finger is lifted
+              then:
+                - logger.log:
+                    format: "Fan slider released: %.0f%%"
+                    args: [x]
                 - homeassistant.service:
                     service: fan.set_percentage
                     data:
-                      entity_id: ${office_fan_entity}
-                      percentage: !lambda "return x;"
+                      entity_id: ${fan_entity}
+                      percentage: !lambda "return (int)x;"
 
         # ── Preset buttons (Low / Med / High) ────────────────────────────────
         - obj:
             align: BOTTOM_MID
             y: -40
             width: 90%
-            height: 36
+            height: 60
             bg_color: 0x00000000
             layout:
               type: FLEX
