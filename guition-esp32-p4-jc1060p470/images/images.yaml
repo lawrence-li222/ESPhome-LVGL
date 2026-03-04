@@ -3,4 +3,4 @@ image:
     id: bg_office
     type: RGB565        # compact format — best for displays
     resize: 1024x600    # must match your display resolution exactly
-    dither: false
+    dither: "false"
