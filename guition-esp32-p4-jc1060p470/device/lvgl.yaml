@@ -148,7 +148,7 @@ lvgl:
                 - homeassistant.service:
                     service: fan.set_percentage
                     data:
-                      entity_id: ${fan_entity}
+                      entity_id: ${office_fan_entity}
                       percentage: !lambda "return x;"
 
         # ── Preset buttons (Low / Med / High) ────────────────────────────────
@@ -180,7 +180,7 @@ lvgl:
                       - homeassistant.service:
                           service: fan.set_percentage
                           data:
-                            entity_id: ${fan_entity}
+                            entity_id: ${office_fan_entity}
                             percentage: 33
 
               - button:
@@ -199,7 +199,7 @@ lvgl:
                       - homeassistant.service:
                           service: fan.set_percentage
                           data:
-                            entity_id: ${fan_entity}
+                            entity_id: ${office_fan_entity}
                             percentage: 66
 
               - button:
@@ -218,7 +218,7 @@ lvgl:
                       - homeassistant.service:
                           service: fan.set_percentage
                           data:
-                            entity_id: ${fan_entity}
+                            entity_id: ${office_fan_entity}
                             percentage: 100
 
         # ── ON / OFF toggle ──────────────────────────────────────────────────
@@ -240,14 +240,14 @@ lvgl:
               then:
                 - if:
                     condition:
-                      binary_sensor.is_on: ha_fan_state
+                      binary_sensor.is_on: ha_office_fan_state
                     then:
                       - homeassistant.service:
                           service: fan.turn_off
                           data:
-                            entity_id: ${fan_entity}
+                            entity_id: ${office_fan_entity}
                     else:
                       - homeassistant.service:
                           service: fan.turn_on
                           data:
-                            entity_id: ${fan_entity}
+                            entity_id: ${office_fan_entity}

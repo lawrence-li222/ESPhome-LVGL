@@ -14,7 +14,7 @@ sensor:
   # Receives fan speed percentage (0–100) from HA
   - platform: homeassistant
     id: ha_fan_speed
-    entity_id: ${fan_entity}
+    entity_id: ${office_fan_entity}
     attribute: percentage
     on_value:
       then:
