@@ -1,3 +1,14 @@
+fan:
+  - platform: homeassistant
+    id: ha_office_fan
+    entity_id: fan.office_ceiling_fan
+    on_state:
+      then:
+        - lvgl.widget.update:
+            id: office_ceiling_fan_switch
+            state:
+              checked: !lambda return x;
+
 lvgl:
   displays: my_display
   byte_order: little_endian
@@ -60,12 +71,14 @@ lvgl:
                   id: office_ceiling_fan_label
                   text: "Ceiling Fan"
             on_value:
-              - lambda: |-
-                  if (state) {
-                    id(fan.office_ceiling_fan).turn_on();
-                  } else {
-                    id(fan.office_ceiling_fan).turn_off();
-                  }
+             then:
+                - if:
+                  condition:
+                    lambda: return x;
+                  then:
+                    - fan.turn_on: ha_office_fan
+                  else:
+                    - fan.turn_off: ha_office_fan
            
         # # Office Calls Scene
         # - button: 
@@ -411,12 +424,3 @@ lvgl:
         #           service: light.toggle
         #           data:
         #             entity_id: light.office_network_rack
-# Link the switch state back from Home Assistant
-switch:
-  - platform: homeassistant
-    id: office_ha_ceiling_fan_switch
-    entity_id: fan.office_ceiling_fan
-    on_state:
-      - lvgl.switch.update:
-          id: office_ceiling_fan_switch
-          state: !lambda 'return x;'
