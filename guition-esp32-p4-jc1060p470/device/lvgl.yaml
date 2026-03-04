@@ -43,28 +43,28 @@ lvgl:
       
       widgets:
       
-        # Office Features Scene
+        # Office Ceiling Fan Light
         - button: 
             height: $button_height
             width: $button_width
             checkable: true
-            id: office_scene_features_button
+            id: office_ceiling_fan_light_button
             styles: control
             widgets:
               - label:
                   text_font: $icon_font
                   align: top_left
-                  id: scene_features_icon                
-                  text: $ledstrip
+                  id: office_ceiling_fan_light_icon                
+                  text: $lightbulb
               - label:
                   align: bottom_left
-                  id: scene_features_label
-                  text: "Test"
+                  id: office_ceiling_fan_light_label
+                  text: "Ceiling Fan Light"
             on_press:
               - homeassistant.service:
                   service: switch.toggle
                   data:
-                    entity_id: switch.office_features_stateful_scene
+                    entity_id: office_pico_light_on
 
         # Office Calls Scene
         - button: 
