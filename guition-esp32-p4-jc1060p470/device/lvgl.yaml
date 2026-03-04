@@ -52,10 +52,20 @@ lvgl:
           
   pages:
     - id: office_page
+      layout: 
+        type: flex
+        flex_flow: column_wrap
+        pad_row: 10
+        pad_column: 10
+      width: 100%
       bg_color: 0x000000
-      bg_opa: 0%           # transparent — image widget is the bg
+      bg_opa: 0%          # transparent — image widget is the bg
+      pad_top: 42
+      pad_bottom: 5
+      pad_left: 5
+      pad_right: 5
+      
       widgets:
-
         # ── Background image ────────────────────────────────────────────────
         - image:
             src: bg_office
@@ -71,9 +81,9 @@ lvgl:
             width: 1024
             height: 600
             bg_color: 0x000000
-            bg_opa: 55%          # 0=clear, 255=solid. 140 ≈ 55% dim
+            bg_opa: 55%           # 0%=clear, 100%=solid
             border_width: 0
-        # ──── Header ──────────────────────────────────────────────────────────
+       # ── Header ──────────────────────────────────────────────────────────
         - obj:
             align: TOP_MID
             y: 0
